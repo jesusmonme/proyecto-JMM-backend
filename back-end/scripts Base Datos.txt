@@ -1,0 +1,44 @@
+create schema `penyas`;
+
+create table `penyas`.`equipo` (
+id_equipo integer not null auto_increment, 
+nombre_equipo varchar(255), 
+id_penya integer, 
+primary key (id_equipo)) engine=InnoDB ;
+
+create table `penyas`.`jugador` (id_jugador integer not null auto_increment,
+ descripcion varchar(255),
+ email varchar(255),
+ incompatibilidad integer,
+ jugador_seleccionado bit,
+ miembro bit,
+ nivel varchar(255),
+ nombre_jugador varchar(255) not null,
+ partidos_empatados integer,
+ partidos_ganados integer,
+ partidos_perdidos integer,
+ posicion varchar(255),
+ ratio float(23),
+ ultimo_partido bit,
+ id_equipo integer, id_penya integer,
+ primary key (id_jugador)) engine=InnoDB;
+
+create table `penyas`.`penya` (id_penya integer not null auto_increment,
+ considerar_incompatibilidades bit,
+ cuota float(53),
+ equilibrar_niveles bit,
+ equilibrar_posiciones bit,
+ equipo1 varchar(255),
+ equipo2 varchar(255),
+ nombrebd varchar(255) not null,
+ nombre_penya varchar(255) not null,
+ puntos_derrota integer,
+ puntos_empate integer,
+ puntos_victoria integer,
+ sorteo varchar(255),
+ primary key (id_penya)) engine=InnoDB;
+
+alter table `penyas`.`equipo` add constraint fk_equipo_penya foreign key (id_penya) references penya (id_penya);
+
+alter table `penyas`.`jugador` add constraint fk_jugador_equipo foreign key (id_equipo) references equipo (id_equipo);
+alter table `penyas`.`jugador` add constraint fk_jugador_penya foreign key (id_penya) references penya (id_penya);
